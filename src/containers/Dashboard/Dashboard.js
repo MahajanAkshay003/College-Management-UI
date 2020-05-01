@@ -14,6 +14,8 @@ import AddFacultySectionContainer from "../AdminSection/AddFacultySection/AddFac
 import TrainingPlacementCellDashboard from "../TrainingPlacementCellSection/TrainingPlacementCellDashboard";
 import ExamCellDashboard from "../ExamCell/ExamCellDashboard/ExamCellDashboardContainer";
 import StudentMarksContainer from "../ExamCell/AddStudentMarks/StudentMarksContainer";
+import FacultyAttendancePanelContainer
+  from "../AdminSection/FacultyAttendanceSection/Panel/FacultyAttendancePanelContainer";
 
 const Dashboard = props => {
   return (
@@ -26,14 +28,15 @@ const Dashboard = props => {
         </Grid>
         <Grid item xs={11}>
           <Switch>
-            {/*<Route path={"/dashboard"} render={props => <AdminSection/>} exact/>*/}
+            <Route path={"/dashboard"} render={props => <AdminSection/>} exact/>
             {/*<Route path={"/dashboard"} render={props => <TrainingPlacementCellDashboard />} exact />*/}
-            <Route path={"/dashboard"} render={props => <ExamCellDashboard />} exact />
+            {/*<Route path={"/dashboard"} render={props => <ExamCellDashboard />} exact />*/}
             <Route path={"/dashboard/announcements"} render={props => <AnnouncementList />}/>
             <Route path={"/dashboard/profile"} render={props => <StudentProfile />}/>
             <Route path={"/dashboard/student/:action"} render={props => <AddStudentSection { ...props } />} />
             <Route path={"/dashboard/editMarks/:studentId"} render={props => <StudentMarksContainer { ...props } />} />
             <Route path={"/dashboard/faculty/add"} render={props => <AddFacultySectionContainer { ...props } />} />
+            <Route path={"/dashboard/faculty/attendance"} render={props => <FacultyAttendancePanelContainer { ...props } />} />
             <Route path={"/dashboard/department/add"} render={props => <DepartmentContainer { ...props } />} />
             <Route path={"/dashboard/batch/add"} render={props => <BatchContainer { ...props } />} />
           </Switch>

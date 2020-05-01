@@ -4,6 +4,7 @@ import CreateStudentCard from "./StudentSection/CreateStudentCard";
 import AddStudentMarks from "./StudentSection/AddStudentMarks";
 import CreateFacultyCard from "./FacultySection/CreateFacultyCard";
 import CreateEmployee from "./EmployeeSection/CreateEmployee";
+import FacultyAttendanceCard from "./FacultyAttendanceSection/FacultyAttendanceCard";
 
 const AddUserSection = props => {
   return (
@@ -21,9 +22,9 @@ const AddUserSection = props => {
           <Grid item xs={4}>
             <CreateFacultyCard />
           </Grid>
-          {/*<Grid item xs={4}>*/}
-          {/*  <CreateEmployee />*/}
-          {/*</Grid>*/}
+          <Grid item xs={4}>
+            <FacultyAttendanceCard />
+          </Grid>
         </Grid>
       </Grid>
     </Paper>

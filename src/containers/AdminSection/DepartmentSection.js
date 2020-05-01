@@ -20,9 +20,9 @@ const DepartmentSection = props => {
           <Grid item xs={4}>
             <BatchCard />
           </Grid>
-          <Grid item xs={4}>
-            <TimeTableCard />
-          </Grid>
+          {/*<Grid item xs={4}>*/}
+          {/*  <TimeTableCard />*/}
+          {/*</Grid>*/}
         </Grid>
       </Grid>
     </Paper>
