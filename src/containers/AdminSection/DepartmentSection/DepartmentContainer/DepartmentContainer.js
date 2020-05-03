@@ -1,10 +1,34 @@
 import React, { useState } from 'react';
 import { Button, Grid, TextField, Typography } from "@material-ui/core";
+import { addDepartment } from "../../../../remoteMethods/Department/Department";
+import NotificationCustomHook from "../../../../CustomHooks/NotificationCustomHook";
+import Notification from "../../../../components/Notification/Notification";
 
 const DepartmentContainer = props => {
+  const [
+    isNotificationOpen, setNotificationOpen, notificationMessage, notificationType, setNotificationTypeAndMessage
+  ] = NotificationCustomHook();
   const [ departmentName, setDepartmentName ] = useState("");
   const [ departmentDescription, setDepartmentDescription ] = useState("");
+  const [ departmentHodId, setDepartmentHodId ] = useState("");
   const [ departmentHodName, setDepartmentHodName ] = useState("");
+  const addDepartmentButtonHandler = async () => {
+    try {
+      console.log(departmentName, departmentDescription, departmentHodId);
+      await addDepartment(departmentName, departmentDescription, departmentHodId);
+      resetForm();
+      setNotificationTypeAndMessage("success", "New Department Added Successfully!");
+    } catch (error) {
+      resetForm();
+      setNotificationTypeAndMessage("error", "Something went wrong!");
+    }
+  }
+  const resetForm = () => {
+    setDepartmentName("");
+    setDepartmentDescription("");
+    setDepartmentHodName("");
+    setDepartmentHodId("");
+  }
   return (
     <Grid container justify={"center"} spacing={0}>
       <Grid item xs={12}>
@@ -47,7 +71,7 @@ const DepartmentContainer = props => {
                   variant={"contained"}
                   color={"secondary"}
                   style={{ marginTop: "16px", marginBottom: "16px" }}
-                  onClick={() => {}}
+                  onClick={addDepartmentButtonHandler}
                   fullWidth
                 >
                   Save
@@ -57,6 +81,12 @@ const DepartmentContainer = props => {
           </Grid>
         </Grid>
       </Grid>
+      <Notification
+        isNotificationOpen={isNotificationOpen}
+        setNotificationOpen={setNotificationOpen}
+        notificationMessage={notificationMessage}
+        notificationType={notificationType}
+      />
     </Grid>
   );
 }
