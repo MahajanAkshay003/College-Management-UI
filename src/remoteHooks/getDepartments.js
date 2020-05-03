@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { apiUrl } from "../vars/config";
+import { getAllDepartments } from "../remoteMethods/Department/Department";
 
-const getDepartment = props => {
-  const [ department, setDepartments ] = useState([]);
+const useGetDepartments = props => {
+  const [ loading, setLoading ] = useState(false);
+  const [ departments, setDepartments ] = useState([]);
+  const [ error, setError ] = useState(false);
   useEffect(() => {
-    axios.get(`${apiUrl}/`)
+    setLoading(true);
+    getAllDepartments().then(departments => {
+      setDepartments(departments);
+      setLoading(false);
+      setError(false);
+    });
   }, []);
-  return departments;
+  return [ departments, loading, error ];
 }
+
+export default useGetDepartments;

@@ -14,3 +14,16 @@ export const addDepartment = (departmentName, departmentDescription, departmentH
     });
   });
 }
+
+export const getAllDepartments = () => {
+  return new Promise((resolve, reject) => {
+    axios({
+      url: `${apiUrl}/Departments/getDepartments`,
+      method: "GET"
+    }).then(({ data }) => {
+      resolve(data.departments);
+    }).catch(error => {
+      reject(error);
+    })
+  });
+}
