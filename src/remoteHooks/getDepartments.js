@@ -7,8 +7,11 @@ const useGetDepartments = props => {
   const [ error, setError ] = useState(false);
   useEffect(() => {
     setLoading(true);
-    getAllDepartments().then(departments => {
-      setDepartments(departments);
+    getAllDepartments().then((departments) => {
+      setDepartments(departments.map(department => ({
+        label: department.departmentName,
+        value: department.id
+      })));
       setLoading(false);
       setError(false);
     });

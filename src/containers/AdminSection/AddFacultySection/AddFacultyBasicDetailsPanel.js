@@ -1,12 +1,15 @@
 import React from 'react';
 import {FormControlLabel, Grid, Radio, RadioGroup, TextField} from "@material-ui/core";
+import Select from "react-select";
+import dropdownStyles from "../../../styles/dropdownStyles";
 
 const AddFacultyBasicDetailsPanel = props => {
   const {
     firstName, setFirstName,
     middleName, setMiddleName,
     lastName, setLastName,
-    departmentName, setDepartmentName
+    email, setEmail,
+    setDepartmentId, departments
   } = props;
   return (
     <Grid container justify={"center"}>
@@ -14,6 +17,7 @@ const AddFacultyBasicDetailsPanel = props => {
           <Grid container>
             <Grid item xs={12}>
               <TextField
+                autoFocus
                 style={{ marginTop: "12px" }}
                 label="First Name"
                 variant="outlined"
@@ -38,12 +42,20 @@ const AddFacultyBasicDetailsPanel = props => {
                 fullWidth
               />
               <TextField
-                label="Department Name"
                 style={{ marginTop: "12px" }}
+                label="Email Address"
                 variant="outlined"
-                value={departmentName}
-                onChange={event => setDepartmentName(event.target.value)}
+                value={email}
+                onChange={event => setEmail(event.target.value)}
                 fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} style={{ marginTop: 12 }}>
+              <Select
+                styles={dropdownStyles}
+                options={departments}
+                placeholder={"Choose Department"}
+                onChange={selectedVal => setDepartmentId(selectedVal.value)}
               />
             </Grid>
           </Grid>

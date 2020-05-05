@@ -15,12 +15,7 @@ const BatchContainer = props => {
   const [ allDepartments, setAllDepartments ] = useState([]);
   const [ departmentId, setDepartmentId ] = useState("");
   const [ batchName, setBatchName ] = useState("");
-  useEffect(() => {
-    setAllDepartments(departments.map(department => ({
-      label: department.departmentName,
-      value: department.id
-    })));
-  }, [departments]);
+  useEffect(() => setAllDepartments(departments), [departments]);
   const saveBatchButtonHandler = async () => {
     try {
       await addBatch(departmentId, batchName);

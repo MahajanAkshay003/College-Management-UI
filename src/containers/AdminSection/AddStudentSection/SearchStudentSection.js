@@ -14,8 +14,10 @@ import {
 } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import StudentIcon from "../../../assets/student.png"
+import StudentInfoCard from "./StudentInfoCard";
 
 const SearchStudentSection = props => {
+  const { rollNumber, setRollNumber, getStudentDetails, student, editStudentDetails } = props;
   return (
     <Grid container style={{ marginTop: 16 }} justify={"center"}>
       <Grid item xs={4}/>
@@ -31,27 +33,30 @@ const SearchStudentSection = props => {
       <Grid item xs={4} />
       <Grid item xs={6}>
         <Card style={{position: "relative", top: "-32px", zIndex: 0 }} elevation={4}>
-            <CardContent style={{textAlign: "center", paddingTop: "42px"}} >
-              <Typography variant={"h4"} style={{ fontWeight: 300 }}>
-                Search Student
-              </Typography>
-              <Grid container justify={"center"} style={{ marginTop: 16 }}>
-                <Grid item xs={8}>
-                  <TextField
-                    label="Enter your Roll Number"
-                    variant="outlined"
-                    autoFocus={true}
-                    fullWidth
-                  />
-                </Grid>
-                <Grid item xs={1}>
-                  <Button variant={"contained"} color={"primary"} size={"small"}>
-                    <IconButton><SearchIcon style={{ color: "white" }} /></IconButton>
-                  </Button>
-                </Grid>
+          <CardContent style={{textAlign: "center", paddingTop: "42px"}} >
+            <Typography variant={"h4"} style={{ fontWeight: 300 }}>
+              Search Student
+            </Typography>
+            <Grid container justify={"center"} style={{ marginTop: 16 }}>
+              <Grid item xs={8}>
+                <TextField
+                  label="Enter your Roll Number"
+                  variant="outlined"
+                  value={rollNumber}
+                  onChange={event => setRollNumber(event.target.value)}
+                  autoFocus={true}
+                  fullWidth
+                />
               </Grid>
-            </CardContent>
+              <Grid item xs={1}>
+                <Button variant={"contained"} color={"primary"} size={"small"} onClick={getStudentDetails}>
+                  <IconButton><SearchIcon style={{ color: "white" }} /></IconButton>
+                </Button>
+              </Grid>
+            </Grid>
+          </CardContent>
         </Card>
+        {student && <StudentInfoCard editStudentDetails={editStudentDetails} student={student} />}
       </Grid>
     </Grid>
   );

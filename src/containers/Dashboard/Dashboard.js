@@ -16,6 +16,8 @@ import ExamCellDashboard from "../ExamCell/ExamCellDashboard/ExamCellDashboardCo
 import StudentMarksContainer from "../ExamCell/AddStudentMarks/StudentMarksContainer";
 import FacultyAttendancePanelContainer
   from "../AdminSection/FacultyAttendanceSection/Panel/FacultyAttendancePanelContainer";
+import SubjectContainer from "../AdminSection/AddSubjectSection/SubjectContainer/SubjectContainer";
+import ListSubjectContainer from "../AdminSection/AddSubjectSection/ListSubjectContainer/ListSubjectContainer";
 
 const Dashboard = props => {
   return (
@@ -39,6 +41,8 @@ const Dashboard = props => {
             <Route path={"/dashboard/faculty/attendance"} render={props => <FacultyAttendancePanelContainer { ...props } />} />
             <Route path={"/dashboard/department/add"} render={props => <DepartmentContainer { ...props } />} />
             <Route path={"/dashboard/batch/add"} render={props => <BatchContainer { ...props } />} />
+            <Route path={"/dashboard/subject/add"} render={props => <SubjectContainer { ...props} />} />
+            <Route path={"/dashboard/subject/list"} render={props => <ListSubjectContainer { ...props} />} />
           </Switch>
         </Grid>
       </Grid>

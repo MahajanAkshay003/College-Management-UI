@@ -3,6 +3,7 @@ import {Grid, Paper, Typography} from "@material-ui/core";
 import DepartmentCard from "./DepartmentSection/DepartmentCard";
 import BatchCard from "./BatchSection/BatchCard";
 import TimeTableCard from "./DepartmentSection/TimeTableCard";
+import SubjectCard from "./AddSubjectSection/SubjectCard";
 
 const DepartmentSection = props => {
   return (
@@ -20,9 +21,9 @@ const DepartmentSection = props => {
           <Grid item xs={4}>
             <BatchCard />
           </Grid>
-          {/*<Grid item xs={4}>*/}
-          {/*  <TimeTableCard />*/}
-          {/*</Grid>*/}
+          <Grid item xs={4}>
+            <SubjectCard />
+          </Grid>
         </Grid>
       </Grid>
     </Paper>
