@@ -4,10 +4,14 @@ import DateFnsUtils from '@date-io/date-fns';
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@material-ui/core";
 
 const AddFacultyAttendanceDialog = props => {
-  const { isOpenAttendanceDialog, setOpenAttendanceDialog } = props;
-  const [selectedDate, handleDateChange] = useState(new Date());
-  const handleClose = () => {
-    setOpenAttendanceDialog(false);
+  const { selectedDate, handleDateChange, facultyId, isOpenAttendanceDialog, setOpenAttendanceDialog, facultyAttendance, markFacultyAttendance } = props;
+  const handleClose = () => setOpenAttendanceDialog(false);
+  const saveAttendance = () => {
+    if (facultyAttendance.length === 0) {
+      markFacultyAttendance(facultyId, "entry", selectedDate);
+    } else if (facultyAttendance.length > 0) {
+      markFacultyAttendance(facultyId, "exit", selectedDate, facultyAttendance[0].id);
+    }
   }
   return (
     <Dialog open={isOpenAttendanceDialog} onClose={handleClose} maxWidth={"sm"} fullWidth>
@@ -16,7 +20,7 @@ const AddFacultyAttendanceDialog = props => {
         <KeyboardTimePicker
           fullWidth
           value={selectedDate}
-          label="Mark Entry Time"
+          label={facultyAttendance.length === 0 ? "Mark Entry Time" : "Mark Exit Time"}
           onChange={handleDateChange}
         />
       </DialogContent>
@@ -24,7 +28,7 @@ const AddFacultyAttendanceDialog = props => {
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={saveAttendance} color="primary">
           Save Attendance
         </Button>
       </DialogActions>

@@ -3,7 +3,7 @@ import { Grid, TextField, Button } from "@material-ui/core";
 import Select from 'react-select';
 
 const FacultyFilters = props => {
-  const [ name, setName ] = useState("");
+  const { fullName, setFullName, startSearch } = props;
   return (
     <Grid container spacing={1}>
       <Grid item xs={8}>
@@ -11,15 +11,15 @@ const FacultyFilters = props => {
           label="Faculty Name"
           variant="outlined"
           placeholder={"Search Faculty by Name"}
-          value={name}
+          value={fullName}
           autoFocus
-          onChange={event => setName(event.target.value)}
+          onChange={event => setFullName(event.target.value)}
           margin={"dense"}
           fullWidth
         />
       </Grid>
       <Grid item xs={4}>
-        <Button variant={"contained"} color={"secondary"} fullWidth style={{ marginTop: 10 }}>
+        <Button variant={"contained"} color={"secondary"} fullWidth style={{ marginTop: 10 }} onClick={() => startSearch()}>
           Search Faculty
         </Button>
       </Grid>
