@@ -14,3 +14,19 @@ export const getStudentByRollNumber = rollNumber => {
     })
   })
 }
+
+export const getStudents = whereFilter => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "GET",
+      url: `${apiUrl}/Students/getStudents`,
+      params: {
+        whereFilter
+      }
+    }).then(({ data }) => {
+      resolve(data.students);
+    }).catch(error => {
+      reject(error);
+    })
+  })
+}

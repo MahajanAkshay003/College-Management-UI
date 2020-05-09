@@ -4,7 +4,7 @@ import AnnouncementDialog from "./Dialogs/AnnouncementDialog";
 import MailDialog from "./Dialogs/MailDialog";
 
 const StudentFilters = props => {
-  const [ name, setName ] = useState("");
+  const { fullName, setFullName, startSearch } = props;
   const [ isOpenAnnouncementDialog, setOpenAnnouncementDialog ] = useState(false);
   const [ isOpenSendMailDialog, setOpenSendMailDialog ] = useState(false);
   const handleAnnouncementButton = isOpen => {
@@ -19,19 +19,24 @@ const StudentFilters = props => {
         <TextField
           label="Student Name"
           variant="outlined"
-          value={name}
+          value={fullName}
           autoFocus
-          onChange={event => setName(event.target.value)}
+          onChange={event => setFullName(event.target.value)}
           margin={"dense"}
           fullWidth
         />
       </Grid>
-      <Grid item xs={4} style={{ paddingTop: 12 }}>
+      <Grid item xs={2} style={{ paddingTop: 12 }}>
+        <Button variant={"contained"} style={{ backgroundColor: "blue", color: "white" }} onClick={startSearch} fullWidth>
+          Search
+        </Button>
+      </Grid>
+      <Grid item xs={3} style={{ paddingTop: 12 }}>
          <Button variant={"contained"} color={"primary"} onClick={() => handleAnnouncementButton(true)} fullWidth>
             Send Anouncement
           </Button>
       </Grid>
-      <Grid item xs={4} style={{ paddingTop: 12 }}>
+      <Grid item xs={3} style={{ paddingTop: 12 }}>
         <Button variant={"contained"} color={"secondary"} onClick={() => handleSendMailButton(true)} fullWidth>
           Send Mail
         </Button>

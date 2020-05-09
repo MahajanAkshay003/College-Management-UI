@@ -5,7 +5,8 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 
 const StudentsTable = props => {
-  const tableHeaders = ["Name", "Roll Number", "Current Year", "Year of Joining", "Actions"];
+  const tableHeaders = ["Name", "Roll Number", "Current Semester", "Department", "Batch", "Actions"];
+  const { students } = props;
   const addEditMarksHandler = studentId => {
     props.history.push(`/dashboard/editMarks/${studentId}`);
   }
@@ -35,24 +36,27 @@ const StudentsTable = props => {
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell padding="checkbox">
-              <Checkbox />
-            </TableCell>
-            <TableCell component="th" scope="row" padding="none">
-              Akshay Mahajan
-            </TableCell>
-            <TableCell>00811502816</TableCell>
-            <TableCell>71%</TableCell>
-            <TableCell>Fourth</TableCell>
-            <TableCell>
-              <ThemeProvider theme={theme}>
-                <Button variant="contained" color="primary" style={{ color: "white" }} onClick={() => addEditMarksHandler(10)}>
-                  Add / Edit Marks
-                </Button>
-              </ThemeProvider>
-            </TableCell>
-          </TableRow>
+          {students.map((student) => (
+            <TableRow>
+              <TableCell padding="checkbox">
+                <Checkbox />
+              </TableCell>
+              <TableCell component="th" scope="row" padding="none">
+                {student.fullName}
+              </TableCell>
+              <TableCell>{student.rollNumber}</TableCell>
+              <TableCell>{student.semester}</TableCell>
+              <TableCell>{student.department.departmentName}</TableCell>
+              <TableCell>{student.batch.batchName}</TableCell>
+              <TableCell>
+                <ThemeProvider theme={theme}>
+                  <Button variant="contained" color="primary" style={{ color: "white" }} onClick={() => addEditMarksHandler(10)}>
+                    Add / Edit Marks
+                  </Button>
+                </ThemeProvider>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
     </Paper>

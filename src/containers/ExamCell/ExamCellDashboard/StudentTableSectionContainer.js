@@ -4,13 +4,14 @@ import StudentsTable from "./StudentTable/StudentTable";
 import StudentFiltersAction from "./StudentTable/StudentFiltersAction";
 
 const StudentTableSectionContainer = props => {
+  const { startSearch, fullName, setFullName, students } = props;
   return (
     <Grid container style={{ paddingLeft: 8 }}>
       <Grid item xs={12} style={{ marginBottom: 8 }}>
-       <StudentFiltersAction />
+       <StudentFiltersAction startSearch={startSearch} fullName={fullName} setFullName={setFullName} />
       </Grid>
       <Grid item xs={12}>
-        <StudentsTable />
+        <StudentsTable students={students} />
       </Grid>
     </Grid>
   );

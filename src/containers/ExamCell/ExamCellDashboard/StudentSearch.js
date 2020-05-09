@@ -3,14 +3,18 @@ import {Button, Card, CardContent, CardMedia, Grid, IconButton, Paper, TextField
 import StudentIcon from "../../../assets/student.png";
 import SearchIcon from "@material-ui/icons/Search";
 import Select from "react-select";
+import useGetDepartments from "../../../remoteHooks/getDepartments";
+import useGetBatchesByDepartment from "../../../remoteHooks/getBatchesByDepartment";
 
 const StudentSearch = props => {
-  const departmentsList = [{ value: "cse", label: "CSE" }, { value: "ece", label: "ECE" }, { value: "it", label: "IT" }];
-  const batchesList = [{ value: 1, label: "ECE-1" }, { value: 2, label: "ECE-2" }];
+  const [ departments, loading, error ] = useGetDepartments();
+  const batches = useGetBatchesByDepartment(props.selectedDepartment);
   const yearsList = [{ value: 1, label: "First Year" }, { value: 2, label: "Second Year" }, { value: 3, label: "Third Year" }, { value: 4, label: "Fourth Year" }];
-  const [ selectedDepartment, setSelectedDepartment ] = useState("Select Department");
-  const [ selectedBatch, setSelectedBatch ] = useState("Select Batch");
-  const [ selectedYear, setSelectedYear ] = useState("Select Year");
+  const {
+    setStartSearch, selectedDepartment, selectedBatch,
+    selectedSemester, setSelectedDepartment, setSelectedBatch,
+    setSelectedSemester, filterStudentsClickHandler
+  } = props;
   return (
     <Grid container style={{ marginTop: 16 }} justify={"center"}>
       <Grid item xs={4}/>
@@ -30,23 +34,23 @@ const StudentSearch = props => {
               <Grid container justify={"center"} style={{ marginTop: 16 }}>
                 <Grid item xs={8}>
                   <div>
-                    <Select options={departmentsList} defaultValue={selectedDepartment} onChange={selectedVal => {
+                    <Select options={departments} placeholder={"Select Department"} onChange={selectedVal => {
                       setSelectedDepartment(selectedVal.value)
                     }} />
                   </div>
                   <div style={{ marginTop: 16 }}>
-                    <Select options={batchesList} defaultValue={selectedBatch} onChange={selectedVal => {
+                    <Select options={batches} placeholder={"Select Batch"} onChange={selectedVal => {
                       setSelectedBatch(selectedVal.value)
                     }} />
                   </div>
                   <div style={{ marginTop: 16 }}>
-                    <Select options={yearsList} defaultValue={selectedYear} onChange={selectedVal => {
-                      setSelectedYear(selectedVal.value)
+                    <Select options={yearsList} placeholder={"Select Year"} onChange={selectedVal => {
+                      setSelectedSemester(selectedVal.value * 2)
                     }} />
                   </div>
                 </Grid>
                 <Grid item xs={8} style={{ marginTop: 16 }}>
-                  <Button variant={"contained"} color={"primary"} fullWidth>
+                  <Button variant={"contained"} color={"primary"} fullWidth onClick={filterStudentsClickHandler}>
                     <IconButton><SearchIcon style={{ color: "white" }} /></IconButton>
                     <Typography variant={"body1"}>Filter Students</Typography>
                   </Button>

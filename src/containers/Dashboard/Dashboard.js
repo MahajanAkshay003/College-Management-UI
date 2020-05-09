@@ -30,9 +30,9 @@ const Dashboard = props => {
         </Grid>
         <Grid item xs={11}>
           <Switch>
-            <Route path={"/dashboard"} render={props => <AdminSection/>} exact/>
+            {/*<Route path={"/dashboard"} render={props => <AdminSection/>} exact/>*/}
             {/*<Route path={"/dashboard"} render={props => <TrainingPlacementCellDashboard />} exact />*/}
-            {/*<Route path={"/dashboard"} render={props => <ExamCellDashboard />} exact />*/}
+            <Route path={"/dashboard"} render={props => <ExamCellDashboard />} exact />
             <Route path={"/dashboard/announcements"} render={props => <AnnouncementList />}/>
             <Route path={"/dashboard/profile"} render={props => <StudentProfile />}/>
             <Route path={"/dashboard/student/:action"} render={props => <AddStudentSection { ...props } />} />
