@@ -1,6 +1,20 @@
 import axios from 'axios';
 import {apiUrl} from "../../vars/config";
 
+export const getStudentById = studentId => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "GET",
+      url: `${apiUrl}/Students/getStudentDetails`,
+      params: { studentId }
+    }).then(({ data }) => {
+      resolve(data.student);
+    }).catch(error => {
+      reject(error);
+    })
+  })
+}
+
 export const getStudentByRollNumber = rollNumber => {
   return new Promise((resolve, reject) => {
     axios({

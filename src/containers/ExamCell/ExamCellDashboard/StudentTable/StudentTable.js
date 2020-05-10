@@ -50,7 +50,7 @@ const StudentsTable = props => {
               <TableCell>{student.batch.batchName}</TableCell>
               <TableCell>
                 <ThemeProvider theme={theme}>
-                  <Button variant="contained" color="primary" style={{ color: "white" }} onClick={() => addEditMarksHandler(10)}>
+                  <Button variant="contained" color="primary" style={{ color: "white" }} onClick={() => addEditMarksHandler(student.id)}>
                     Add / Edit Marks
                   </Button>
                 </ThemeProvider>

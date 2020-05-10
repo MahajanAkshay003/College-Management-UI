@@ -4,11 +4,13 @@ import {getSubjectsByDepartmentAndSemester} from "../remoteMethods/Subject/Subje
 const useGetSubjectsByDepartmentAndSemester = (departmentId, semester) => {
   const [ subjects, setSubjects ] = useState();
   useEffect(() => {
-    getSubjectsByDepartmentAndSemester(departmentId, semester).then(data => {
-      setSubjects(data.subjects);
-    }).catch(error => {
-      setSubjects([]);
-    })
+    if (departmentId && semester) {
+      getSubjectsByDepartmentAndSemester(departmentId, semester).then(data => {
+        setSubjects(data.subjects);
+      }).catch(error => {
+        setSubjects([]);
+      })
+    }
   }, [departmentId, semester]);
   return subjects;
 }
