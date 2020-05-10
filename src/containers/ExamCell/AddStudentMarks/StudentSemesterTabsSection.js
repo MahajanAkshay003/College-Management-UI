@@ -3,7 +3,7 @@ import { Grid, Tabs, Tab, AppBar } from "@material-ui/core";
 import StudentSemesterTabMarksPanel from "./StudentSemesterTabMarksPanel";
 
 const StudentSemesterTabSection = props => {
-  const { setSemester, semester, subjects, student } = props;
+  const { setSemester, semester, subjects, student, saveMarks, setStudent } = props;
   const semestersList = new Array(semester).fill().map((value, index) => (index + 1))
   const [ currentTab, setCurrentTab ] = useState(0);
   const handleChange = (event, newValue) => {
@@ -33,6 +33,9 @@ const StudentSemesterTabSection = props => {
             subjects={subjects}
             marks={student.marks}
             semester={semester}
+            saveMarks={saveMarks}
+            setStudent={setStudent}
+            student={student}
           />
         </Grid>
       }

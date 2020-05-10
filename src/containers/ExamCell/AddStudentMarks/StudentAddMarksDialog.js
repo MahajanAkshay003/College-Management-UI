@@ -15,7 +15,7 @@ import Select from "react-select";
 import dropdownStyles from "../../../styles/dropdownStyles";
 
 const StudentAddMarksDialog = props => {
-  const { isMarksDialogOpen, isMarksEdit, currentSubjectMarks, addOrEditMarksOpenHandler } = props;
+  const { isMarksDialogOpen, isMarksEdit, setMarksEdit, setMarksDialogOpen, currentSubjectMarks, setCurrentSubjectMarks, subjects, currentSubjectIndex, saveMarks, student, setStudent } = props;
   const [ internalExamMarks, setInternalExamMarks ] = useState("");
   const [ internalExtraMarks, setInternalExtraMarks ] = useState("");
   const [ externalExamMarks, setExternalExamMarks ] = useState("");
@@ -23,7 +23,8 @@ const StudentAddMarksDialog = props => {
     setInternalExamMarks("");
     setInternalExtraMarks("");
     setExternalExamMarks("");
-    addOrEditMarksOpenHandler(false);
+    setMarksDialogOpen(false);
+    setMarksEdit(!isMarksEdit);
   }
   useEffect(() => {
     if (isMarksEdit && currentSubjectMarks) {
@@ -33,6 +34,38 @@ const StudentAddMarksDialog = props => {
       setExternalExamMarks(externalMarks);
     }
   }, [isMarksEdit, currentSubjectMarks]);
+  const saveOrEditMarksClickHandler = () => {
+    if (isMarksEdit) {
+      saveMarks(
+        true,
+        currentSubjectMarks.subjectId,
+        internalExamMarks,
+        internalExtraMarks,
+        externalExamMarks,
+        currentSubjectMarks.id
+      )
+        .then(marks => {
+          setCurrentSubjectMarks(marks);
+          closeModalHandler();
+        })
+        .catch(error => console.log(error));
+    } else {
+      console.log(subjects[currentSubjectIndex]);
+      saveMarks(
+        false,
+        subjects[currentSubjectIndex].subjectId,
+        internalExamMarks,
+        internalExtraMarks,
+        externalExamMarks,
+      )
+        .then(marks => {
+          setStudent({ ...student, marks: [...student.marks, marks ]});
+          setCurrentSubjectMarks(marks);
+          closeModalHandler();
+        })
+        .catch(error => console.log(error));
+    }
+  }
   return (
     <Dialog fullWidth open={isMarksDialogOpen} onClose={closeModalHandler} aria-labelledby="form-dialog-title">
       <DialogTitle>{isMarksEdit ? "Edit Marks" : "Add Marks"}</DialogTitle>
@@ -67,7 +100,7 @@ const StudentAddMarksDialog = props => {
         <Button onClick={closeModalHandler} color="primary">
           Cancel
         </Button>
-        <Button onClick={closeModalHandler} color="primary">
+        <Button onClick={saveOrEditMarksClickHandler} color="primary">
           Save Marks
         </Button>
       </DialogActions>

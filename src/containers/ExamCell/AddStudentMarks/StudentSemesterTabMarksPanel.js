@@ -6,7 +6,7 @@ import GradeIcon from "@material-ui/icons/Grade";
 import StudentAddMarksDialog from "./StudentAddMarksDialog";
 
 const StudentSemesterTabMarksPanel = props => {
-  const { currentTab, subjects, marks, semester } = props;
+  const { currentTab, subjects, marks, semester, saveMarks, setStudent, student } = props;
   const [ isMarksEdit, setMarksEdit ] = useState(false);
   const [ isMarksDialogOpen, setMarksDialogOpen ] = useState(false);
   const [ currentSubjectIndex, setCurrentSubjectIndex ] = useState(0);
@@ -107,7 +107,15 @@ const StudentSemesterTabMarksPanel = props => {
         isMarksDialogOpen={isMarksDialogOpen}
         isMarksEdit={isMarksEdit}
         currentSubjectMarks={currentSubjectMarks}
+        setCurrentSubjectMarks={setCurrentSubjectMarks}
         addOrEditMarksOpenHandler={addOrEditMarksOpenHandler}
+        setMarksEdit={setMarksEdit}
+        saveMarks={saveMarks}
+        subjects={subjects}
+        currentSubjectIndex={currentSubjectIndex}
+        setMarksDialogOpen={setMarksDialogOpen}
+        setStudent={setStudent}
+        student={student}
       />
     </Fragment>
   )

@@ -17,7 +17,7 @@ const useGetStudentById = (studentId) => {
       });
     }
   }
-  return [ loading, student ];
+  return [ loading, student, setStudent ];
 }
 
 export default useGetStudentById;
