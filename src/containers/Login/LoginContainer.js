@@ -3,6 +3,7 @@ import { Grid, CircularProgress } from "@material-ui/core";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import LoginTypeSwitcher from "../../components/LoginForm/LoginTypeSwitcher";
 import Spinner from "../../components/Helpers/Spinner/Spinner";
+import NotificationCustomHook from "../../CustomHooks/NotificationCustomHook";
 
 const LoginContainer = props => {
   const [ isLoading, setLoading ] = useState(false);

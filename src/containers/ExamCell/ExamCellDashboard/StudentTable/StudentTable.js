@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { withRouter } from "react-router-dom";
 import {Table, TableHead, TableRow, TableCell, TableBody, Checkbox, Paper, Button} from "@material-ui/core";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -6,10 +6,19 @@ import { green } from '@material-ui/core/colors';
 
 const StudentsTable = props => {
   const tableHeaders = ["Name", "Roll Number", "Current Semester", "Department", "Batch", "Actions"];
-  const { students } = props;
+  const { students, selectedStudents, setSelectedStudents } = props;
   const addEditMarksHandler = studentId => {
     props.history.push(`/dashboard/editMarks/${studentId}`);
   }
+  const selectStudentCheckboxHandler = (event, studentId) => {
+    if (event.target.checked) setSelectedStudents([...selectedStudents, studentId]);
+    else setSelectedStudents(selectedStudents.filter(id => id !== studentId));
+  }
+  const selectAllStudentsCheckboxHandler = event => {
+    if (event.target.checked) setSelectedStudents(students.map(student => student.id));
+    else setSelectedStudents([]);
+  }
+  const isStudentSelected = studentId => !!selectedStudents.find(id => id === studentId);
   return (
     <Paper elevation={3}>
       <Table size={'medium'}>
@@ -17,10 +26,8 @@ const StudentsTable = props => {
           <TableRow>
             <TableCell padding="checkbox">
               <Checkbox
-                // indeterminate={numSelected > 0 && numSelected < rowCount}
-                // checked={rowCount > 0 && numSelected === rowCount}
-                // onChange={onSelectAllClick}
-                // inputProps={{'aria-label': 'select all desserts'}}
+                checked={selectedStudents.length === students.length}
+                onChange={selectAllStudentsCheckboxHandler}
               />
             </TableCell>
             {tableHeaders.map((tableHeader, index) => (
@@ -39,7 +46,10 @@ const StudentsTable = props => {
           {students.map((student) => (
             <TableRow>
               <TableCell padding="checkbox">
-                <Checkbox />
+                <Checkbox
+                  checked={isStudentSelected(student.id)}
+                  onChange={(event) => selectStudentCheckboxHandler(event, student.id)}
+                />
               </TableCell>
               <TableCell component="th" scope="row" padding="none">
                 {student.fullName}
@@ -67,4 +77,4 @@ const theme = createMuiTheme({
   palette: { primary: green }
 });
 
-export default withRouter(StudentsTable);
+export default    withRouter(StudentsTable);

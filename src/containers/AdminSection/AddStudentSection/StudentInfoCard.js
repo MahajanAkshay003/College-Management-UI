@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardActionArea, CardContent, Typography, CardActions, Button } from "@material-ui/core";
+import { connect } from "react-redux";
 
 const StudentInfoCard = props => {
   const { student, editStudentDetails } = props;
@@ -22,12 +23,18 @@ const StudentInfoCard = props => {
         <Button size="small" color="primary">
           View
         </Button>
-        <Button size="small" color="primary" onClick={editStudentDetails}>
-          Edit
-        </Button>
+        {
+          props.user.userType === "admin" && <Button size="small" color="primary" onClick={editStudentDetails}>
+            Edit
+          </Button>
+        }
       </CardActions>
     </Card>
   );
 }
 
-export default StudentInfoCard;
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(StudentInfoCard);

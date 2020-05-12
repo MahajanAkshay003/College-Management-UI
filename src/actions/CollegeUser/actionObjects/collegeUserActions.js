@@ -1,8 +1,8 @@
-export const loginUser = payload => ({
+export const loginUserAction = payload => ({
     type: "LOGIN_USER",
     payload
 });
 
-export const logoutUser = () => ({
+export const logoutUserAction = () => ({
     type: "LOGOUT_USER"
 });

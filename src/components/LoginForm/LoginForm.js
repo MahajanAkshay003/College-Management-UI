@@ -5,17 +5,37 @@ import logo from "../../assets/bvcoe_logo.png";
 import { Grid, TextField, LinearProgress } from "@material-ui/core";
 import FaceIcon from "@material-ui/icons/Face";
 import { blue } from "@material-ui/core/colors";
+import { withRouter } from "react-router-dom";
+import {loginUser} from "../../remoteMethods/CollegeUser/CollegeUser";
+import Notification from "../Notification/Notification";
+import NotificationCustomHook from "../../CustomHooks/NotificationCustomHook";
+import {loginUserAction} from "../../actions/CollegeUser/actionObjects/collegeUserActions";
+import {connect} from "react-redux";
 
 const LoginForm = props => {
   const [ step, setStep ] = useState(0);
   const [ email, setEmail ] = useState("");
   const [ password, setPassword ] = useState("");
+  const [
+    isNotificationOpen, setNotificationOpen, notificationMessage, notificationType, setNotificationTypeAndMessage
+  ] = NotificationCustomHook();
   useEffect(() => {
     if (step === 1 && email !== "") setTimeout(() => setStep(2), 1000);
   });
   const getLoginType = () => props.loginType[0].toUpperCase() + props.loginType.substring(1);
   const loginButtonHandler = () => {
-
+    loginUser(email, password, props.loginType)
+      .then(loginUser => {
+        localStorage.setItem("token", loginUser.id);
+        props.loginUser(loginUser);
+        setNotificationTypeAndMessage("success", "Login Successfully!");
+        props.history.push("/dashboard");
+      })
+      .catch(error => {
+        localStorage.clear();
+        props.history.push("/");
+        setNotificationTypeAndMessage("error", "Login failed!");
+      });
   }
   return (
     <Fragment>
@@ -102,7 +122,7 @@ const LoginForm = props => {
                 </Grid>
                 <Grid item xs={6} />
                 <Grid item xs={3}>
-                  <Button variant={"contained"} color={"primary"} fullWidth>
+                  <Button variant={"contained"} color={"primary"} onClick={loginButtonHandler} fullWidth>
                     Submit
                   </Button>
                 </Grid>
@@ -110,8 +130,18 @@ const LoginForm = props => {
             </Grid>
           </div> }
       </Paper>
+      <Notification
+        isNotificationOpen={isNotificationOpen}
+        setNotificationOpen={setNotificationOpen}
+        notificationMessage={notificationMessage}
+        notificationType={notificationType}
+      />
     </Fragment>
   );
 }
 
-export default LoginForm;
+const mapDispatchToProps = (dispatch) => ({
+  loginUser: payload => dispatch((loginUserAction(payload)))
+})
+
+export default withRouter(connect(null, mapDispatchToProps)(LoginForm));

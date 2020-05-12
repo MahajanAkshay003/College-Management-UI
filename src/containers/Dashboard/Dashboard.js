@@ -1,8 +1,9 @@
 import React, {Fragment} from 'react';
-import Header from "../../components/Helpers/Header/Header";
 import {Grid} from "@material-ui/core";
-import DashboardDrawer from "../../components/DashboardDrawer/DashboardDrawer";
+import { connect } from "react-redux";
 import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
+import Header from "../../components/Helpers/Header/Header";
+import DashboardDrawer from "../../components/DashboardDrawer/DashboardDrawer";
 import AdminSection from "../AdminSection/AdminSection";
 import AnnouncementList from "../../components/Announcements/AnnouncementList";
 import StudentProfile from "../StudentSection/StudentProfile/StudentProfile";
@@ -14,12 +15,16 @@ import AddFacultySectionContainer from "../AdminSection/AddFacultySection/AddFac
 import TrainingPlacementCellDashboard from "../TrainingPlacementCellSection/TrainingPlacementCellDashboard";
 import ExamCellDashboard from "../ExamCell/ExamCellDashboard/ExamCellDashboardContainer";
 import StudentMarksContainer from "../ExamCell/AddStudentMarks/StudentMarksContainer";
-import FacultyAttendancePanelContainer
-  from "../AdminSection/FacultyAttendanceSection/Panel/FacultyAttendancePanelContainer";
+import FacultyAttendancePanelContainer from "../AdminSection/FacultyAttendanceSection/Panel/FacultyAttendancePanelContainer";
 import SubjectContainer from "../AdminSection/AddSubjectSection/SubjectContainer/SubjectContainer";
 import ListSubjectContainer from "../AdminSection/AddSubjectSection/ListSubjectContainer/ListSubjectContainer";
+import AddAdminSection from "../AdminSection/AddAdminSection/AddAdminSection";
+import AddExamCellSection from "../AdminSection/AddExamCellSection/AddExamCellSection";
+import AddTnpSection from "../AdminSection/AddTnpSection/AddTnpSection";
+import Announcements from "../../components/Announcements/Announcements";
 
 const Dashboard = props => {
+  const { userType } = props.user;
   return (
     // <BrowserRouter>
     <Fragment>
@@ -30,12 +35,22 @@ const Dashboard = props => {
         </Grid>
         <Grid item xs={11}>
           <Switch>
-            {/*<Route path={"/dashboard"} render={props => <AdminSection/>} exact/>*/}
-            {/*<Route path={"/dashboard"} render={props => <TrainingPlacementCellDashboard />} exact />*/}
-            <Route path={"/dashboard"} render={props => <ExamCellDashboard />} exact />
-            <Route path={"/dashboard/announcements"} render={props => <AnnouncementList />}/>
+            <Route path={"/dashboard"} render={props => {
+              switch (userType) {
+                case "student": return props.history.push("/dashboard/announcements");
+                case "faculty": return props.history.push("/dashboard/student/:action")
+                case "admin": return <AdminSection {...props} />;
+                case "examcell": return <ExamCellDashboard {...props} />;
+                case "tnp": return <TrainingPlacementCellDashboard {...props} />;
+                default:
+              }
+            }} exact/>
+            <Route path={"/dashboard/announcements"} render={props => <Announcements />}/>
             <Route path={"/dashboard/profile"} render={props => <StudentProfile />}/>
             <Route path={"/dashboard/student/:action"} render={props => <AddStudentSection { ...props } />} />
+            <Route path={"/dashboard/admin/add"} render={props => <AddAdminSection { ...props } />} />
+            <Route path={"/dashboard/examcell/add"} render={props => <AddExamCellSection { ...props } />} />
+            <Route path={"/dashboard/tnp/add"} render={props => <AddTnpSection { ...props } />} />
             <Route path={"/dashboard/editMarks/:studentId"} render={props => <StudentMarksContainer { ...props } />} />
             <Route path={"/dashboard/faculty/add"} render={props => <AddFacultySectionContainer { ...props } />} />
             <Route path={"/dashboard/faculty/attendance"} render={props => <FacultyAttendancePanelContainer { ...props } />} />
@@ -50,4 +65,8 @@ const Dashboard = props => {
   )
 };
 
-export default Dashboard;
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(Dashboard);

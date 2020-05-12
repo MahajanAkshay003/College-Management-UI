@@ -14,3 +14,31 @@ export const addCollegeUser = userData => {
     })
   })
 }
+
+export const loginUser = (email, password, userType) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "POST",
+      url: `${apiUrl}/CollegeUsers/loginUser`,
+      data: { email, password, userType }
+    }).then(({ data }) => {
+      resolve(data);
+    }).catch(error => {
+      reject(error);
+    })
+  })
+}
+
+export const getUserByToken = token => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "POST",
+      url: `${apiUrl}/CollegeUsers/getUserByToken`,
+      data: { token }
+    }).then(({ data }) => {
+      resolve(data);
+    }).catch(error => {
+      reject(error);
+    })
+  })
+}

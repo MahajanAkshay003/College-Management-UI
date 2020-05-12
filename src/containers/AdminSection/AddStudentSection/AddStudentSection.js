@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {Grid, Typography, Paper, Stepper, StepLabel, Step, Button} from "@material-ui/core";
 import {withRouter} from "react-router-dom";
-import DashboardDrawer from "../../../components/DashboardDrawer/DashboardDrawer";
+import { connect } from "react-redux";
 import StudentBasicDetailsPanel from "./StudentBasicDetailsPanel";
 import StudentParentDetailsPanel from "./StudentParentDetailsPanel";
 import StudentAdditionalDetails from './AddStudentAdditionalDetails';
@@ -52,7 +52,7 @@ const AddStudentSection = props => {
       </Typography>
     } else if (props.match.params.action === "edit") {
       return <Typography variant={"h4"} style={{fontWeight: 300}}>
-        Edit Current Student
+        { props.user.userType === "admin" && "Edit Current Student" }
       </Typography>
     }
   }
@@ -247,4 +247,8 @@ const AddStudentSection = props => {
   )
 };
 
-export default withRouter(AddStudentSection);
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+export default withRouter(connect(mapStateToProps)(AddStudentSection));

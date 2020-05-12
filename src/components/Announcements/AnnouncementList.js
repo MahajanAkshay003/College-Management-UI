@@ -1,27 +1,41 @@
 import React from 'react';
 import {Chip, Divider, Paper, Table, TableBody, TableCell, TableHead, TableRow} from "@material-ui/core";
+import { connect } from "react-redux";
+import useGetAnnouncementsHook from "../../remoteHooks/getAnnouncementsHook";
 
 const AnnouncementList = props => {
+  const { userId, userType } = props.user;
+  const announcements = useGetAnnouncementsHook(userId, userType);
   return (
-    <Paper elevation={3}>
-      <Table>
-        <TableHead>
+    <Table>
+      <TableHead>
+        <TableRow>
+          <TableCell>Subject</TableCell>
+          <TableCell>Description</TableCell>
+          <TableCell>Issued By</TableCell>
+          <TableCell>Type</TableCell>
+          <TableCell>Issued At</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {announcements.map(announcement => (
           <TableRow>
-            <TableCell>Announcement</TableCell>
-            <TableCell>Issuer</TableCell>
-            <TableCell>Time</TableCell>
+            <TableCell>{announcement.announcement.subject}</TableCell>
+            <TableCell>{announcement.announcement.description}</TableCell>
+            <TableCell>{announcement.announcement.faculty.fullName}</TableCell>
+            <TableCell>
+              <Chip label={announcement.announcement.senderType} color={"secondary"} />
+            </TableCell>
+            <TableCell>{new Date(announcement.announcement.announcementDate).toDateString()}</TableCell>
           </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            <TableCell>This is a test announcement</TableCell>
-            <TableCell>Manoj Kumar</TableCell>
-            <TableCell>12:00:00 PM</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </Paper>
+        ))}
+      </TableBody>
+    </Table>
   );
 };
 
-export default AnnouncementList;
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(AnnouncementList);
