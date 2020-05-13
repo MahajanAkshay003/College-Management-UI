@@ -4,7 +4,7 @@ import AnnouncementDialog from "./Dialogs/AnnouncementDialog";
 import MailDialog from "./Dialogs/MailDialog";
 
 const StudentFilters = props => {
-  const { fullName, setFullName, startSearch } = props;
+  const { fullName, setFullName, startSearch, selectedStudents } = props;
   const [ isOpenAnnouncementDialog, setOpenAnnouncementDialog ] = useState(false);
   const [ isOpenSendMailDialog, setOpenSendMailDialog ] = useState(false);
   const handleAnnouncementButton = isOpen => {
@@ -41,8 +41,8 @@ const StudentFilters = props => {
           Send Mail
         </Button>
       </Grid>
-      <AnnouncementDialog isOpenAnnouncementDialog={isOpenAnnouncementDialog} setOpenAnnouncementDialog={setOpenAnnouncementDialog} />
-      <MailDialog isOpenSendMailDialog={isOpenSendMailDialog} setOpenSendMailDialog={setOpenSendMailDialog} />
+      <AnnouncementDialog selectedStudents={selectedStudents} isOpenAnnouncementDialog={isOpenAnnouncementDialog} setOpenAnnouncementDialog={setOpenAnnouncementDialog} />
+      <MailDialog selectedStudents={selectedStudents} isOpenSendMailDialog={isOpenSendMailDialog} setOpenSendMailDialog={setOpenSendMailDialog} />
     </Grid>
   );
 }

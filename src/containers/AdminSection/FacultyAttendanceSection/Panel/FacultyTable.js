@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {Table, TableHead, TableRow, TableCell, TableBody, Button, Paper, Typography} from "@material-ui/core";
 import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import AddFacultyAttendanceDialog from "./Dialogs/AddFacultyAttendanceDialog";
@@ -8,7 +8,7 @@ import {MuiPickersUtilsProvider} from "@material-ui/pickers";
 import {markAttendanceOfFaculty} from "../../../../remoteMethods/Faculty/Faculty";
 
 const FacultyTable = props => {
-  const tableHeaders = ["Faculty Name", "Department", "Working Days", "Actions"];
+  const [ tableHeaders, setTableHeaders ] = useState(["Faculty Name", "Department", "Working Days"])
   const [ isOpenAttendanceDialog, setOpenAttendanceDialog ] = useState(false);
   const [ selectedFaculty, setSelectedFaculty ] = useState({});
   const [selectedDate, handleDateChange] = useState(new Date());
@@ -31,6 +31,10 @@ const FacultyTable = props => {
     startSearch();
     setOpenAttendanceDialog(false);
   }
+  useEffect(() => {
+    if (props.view) setTableHeaders([...tableHeaders, "In Exam Cell"]);
+    else setTableHeaders([...tableHeaders, "Actions"]);
+  }, [])
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Paper elevation={3}>
@@ -57,32 +61,37 @@ const FacultyTable = props => {
                 </TableCell>
                 <TableCell>{faculty.department.departmentName}</TableCell>
                 <TableCell>{faculty.workingDays}</TableCell>
-                <TableCell>
-                  {faculty.attendance.length === 0 ?
-                    <ThemeProvider theme={theme}>
-                      <Button variant="contained" color={faculty.attendance.length > 0 ? "primary" : "secondary"} style={{ color: "white" }} onClick={() => markFacultyAbsent(faculty.id)} style={{ marginRight: 16 }}>
-                        Mark Leave
-                      </Button>
-                      <Button variant="contained" color={faculty.attendance.length > 0 ? "secondary" : "primary"} style={{ color: "white" }} onClick={() => {
-                        setSelectedFaculty(faculty);
-                        setOpenAttendanceDialog(true);
-                      }}>
-                        Entry Attendance
-                      </Button>
-                    </ThemeProvider>
-                    :
-                    <ThemeProvider theme={theme}>
-                      {!faculty.attendance[0].isPresent && <Typography variant={"body2"}>Faculty on Leave</Typography>}
-                      {faculty.attendance[0].isPresent && faculty.attendance[0].exitTime === "" && <Button variant="contained" color={faculty.attendance.length > 0 ? "secondary" : "primary"} style={{ color: "white" }} onClick={() => {
-                        setSelectedFaculty(faculty);
-                        setOpenAttendanceDialog(true);
-                      }} style={{ marginRight: 16 }}>
-                        {faculty.attendance.length > 0 ? "Exit Attendance" : "Entry Attendance" }
-                      </Button>}
-                      {faculty.attendance[0].isPresent && faculty.attendance[0].exitTime !== "" && <Typography variant={"body2"}>Faculty has left</Typography>}
-                    </ThemeProvider>
-                  }
-                </TableCell>
+                {
+                  props.view && <TableCell>{faculty.isExamCellEmployee ? "Yes" : "No" }</TableCell>
+                }
+                {
+                  !props.view &&  <TableCell>
+                    {faculty.attendance.length === 0 ?
+                      <ThemeProvider theme={theme}>
+                        <Button variant="contained" color={faculty.attendance.length > 0 ? "primary" : "secondary"} style={{ color: "white" }} onClick={() => markFacultyAbsent(faculty.id)} style={{ marginRight: 16 }}>
+                          Mark Leave
+                        </Button>
+                        <Button variant="contained" color={faculty.attendance.length > 0 ? "secondary" : "primary"} style={{ color: "white" }} onClick={() => {
+                          setSelectedFaculty(faculty);
+                          setOpenAttendanceDialog(true);
+                        }}>
+                          Entry Attendance
+                        </Button>
+                      </ThemeProvider>
+                      :
+                      <ThemeProvider theme={theme}>
+                        {!faculty.attendance[0].isPresent && <Typography variant={"body2"}>Faculty on Leave</Typography>}
+                        {faculty.attendance[0].isPresent && faculty.attendance[0].exitTime === "" && <Button variant="contained" color={faculty.attendance.length > 0 ? "secondary" : "primary"} style={{ color: "white" }} onClick={() => {
+                          setSelectedFaculty(faculty);
+                          setOpenAttendanceDialog(true);
+                        }} style={{ marginRight: 16 }}>
+                          {faculty.attendance.length > 0 ? "Exit Attendance" : "Entry Attendance" }
+                        </Button>}
+                        {faculty.attendance[0].isPresent && faculty.attendance[0].exitTime !== "" && <Typography variant={"body2"}>Faculty has left</Typography>}
+                      </ThemeProvider>
+                    }
+                  </TableCell>
+                }
               </TableRow>
             ))}
           </TableBody>

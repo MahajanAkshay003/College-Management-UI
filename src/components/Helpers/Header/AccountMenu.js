@@ -3,12 +3,16 @@ import { Menu, MenuItem } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
+import {logoutUserAction} from "../../../actions/CollegeUser/actionObjects/collegeUserActions";
 
 const AccountMenu = props => {
   const { isMenuOpen, setMenuOpen } = props;
   const logoutUser = () => {
     setMenuOpen(null);
-    props.history.push("/");
+    const userType = props.user.userType;
+    props.logoutUser();
+    localStorage.clear();
+    props.history.push(`/login/${userType}`);
   }
   return (
     <Menu
@@ -17,18 +21,22 @@ const AccountMenu = props => {
       keepMounted
       transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={Boolean(isMenuOpen)}
+      onClose={() => setMenuOpen(null)}
     >
-      <MenuItem onClick={() => props.history.push("/dashboard/profile")}>My Account</MenuItem>
       <MenuItem onClick={logoutUser}>Logout</MenuItem>
     </Menu>
   );
 };
 
 const mapStateToProps = state => ({
-  isAuthenticated: true
+  user: state.user
 });
+
+const mapDispatchToProps = dispatch => ({
+  logoutUser: () => dispatch(logoutUserAction())
+})
 
 export default compose(
   withRouter,
-  connect(mapStateToProps)
+  connect(mapStateToProps, mapDispatchToProps)
 )(AccountMenu);

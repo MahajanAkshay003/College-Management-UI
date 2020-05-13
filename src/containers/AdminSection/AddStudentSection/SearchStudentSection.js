@@ -40,7 +40,7 @@ const SearchStudentSection = props => {
             <Grid container justify={"center"} style={{ marginTop: 16 }}>
               <Grid item xs={8}>
                 <TextField
-                  label="Enter your Roll Number"
+                  label="Enter Roll Number"
                   variant="outlined"
                   value={rollNumber}
                   onChange={event => setRollNumber(event.target.value)}

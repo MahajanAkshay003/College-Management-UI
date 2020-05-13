@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardActionArea, CardContent, Typography, CardActions, Button } from "@material-ui/core";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 const StudentInfoCard = props => {
@@ -20,7 +21,7 @@ const StudentInfoCard = props => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="small" color="primary" onClick={() => props.history.push(`/dashboard/view/${student.id}`)}>
           View
         </Button>
         {
@@ -37,4 +38,4 @@ const mapStateToProps = state => ({
   user: state.user
 })
 
-export default connect(mapStateToProps)(StudentInfoCard);
+export default withRouter(connect(mapStateToProps)(StudentInfoCard));

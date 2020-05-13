@@ -5,7 +5,6 @@ import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
 import Header from "../../components/Helpers/Header/Header";
 import DashboardDrawer from "../../components/DashboardDrawer/DashboardDrawer";
 import AdminSection from "../AdminSection/AdminSection";
-import AnnouncementList from "../../components/Announcements/AnnouncementList";
 import StudentProfile from "../StudentSection/StudentProfile/StudentProfile";
 import AddStudentSection from "../AdminSection/AddStudentSection/AddStudentSection";
 import AddStudentMarksSection from "../AdminSection/AddStudentMarksSection/AddStudentMarksSection";
@@ -22,6 +21,13 @@ import AddAdminSection from "../AdminSection/AddAdminSection/AddAdminSection";
 import AddExamCellSection from "../AdminSection/AddExamCellSection/AddExamCellSection";
 import AddTnpSection from "../AdminSection/AddTnpSection/AddTnpSection";
 import Announcements from "../../components/Announcements/Announcements";
+import FacultyTableContainer from "../AdminSection/AddFacultySection/FacultyTableContainer/FacultyTableContainer";
+import ExamCellTableContainer from "../AdminSection/AddExamCellSection/ExamCellTable/ExamCellTableContainer";
+import AdminEmployeesTableContainer
+  from "../AdminSection/AddAdminSection/AdminEmployeesTableContainer/AdminEmployeesTableContainer";
+import TnpTableContainer from "../AdminSection/AddTnpSection/TnpTableContainer/TnpTableContainer";
+import DepartmentTableContainer
+  from "../AdminSection/DepartmentSection/DepartmentTableContainer/DepartmentTableContainer";
 
 const Dashboard = props => {
   const { userType } = props.user;
@@ -38,7 +44,7 @@ const Dashboard = props => {
             <Route path={"/dashboard"} render={props => {
               switch (userType) {
                 case "student": return props.history.push("/dashboard/announcements");
-                case "faculty": return props.history.push("/dashboard/student/:action")
+                case "faculty": return props.history.push("/dashboard/student/edit")
                 case "admin": return <AdminSection {...props} />;
                 case "examcell": return <ExamCellDashboard {...props} />;
                 case "tnp": return <TrainingPlacementCellDashboard {...props} />;
@@ -46,15 +52,22 @@ const Dashboard = props => {
               }
             }} exact/>
             <Route path={"/dashboard/announcements"} render={props => <Announcements />}/>
+            <Route path={"/dashboard/sendAnnouncement"} render={props => <ExamCellDashboard { ...props } />} />
             <Route path={"/dashboard/profile"} render={props => <StudentProfile />}/>
             <Route path={"/dashboard/student/:action"} render={props => <AddStudentSection { ...props } />} />
             <Route path={"/dashboard/admin/add"} render={props => <AddAdminSection { ...props } />} />
             <Route path={"/dashboard/examcell/add"} render={props => <AddExamCellSection { ...props } />} />
             <Route path={"/dashboard/tnp/add"} render={props => <AddTnpSection { ...props } />} />
-            <Route path={"/dashboard/editMarks/:studentId"} render={props => <StudentMarksContainer { ...props } />} />
+            <Route path={"/dashboard/editMarks/:studentId"} render={props => <StudentMarksContainer view={false} { ...props } />} />
+            <Route path={"/dashboard/view/:studentId"} render={props => <StudentMarksContainer view={true} { ...props } />} />
             <Route path={"/dashboard/faculty/add"} render={props => <AddFacultySectionContainer { ...props } />} />
+            <Route path={"/dashboard/faculty/list"} render={props => <FacultyTableContainer { ...props } />} />
+            <Route path={"/dashboard/examcell/list"} render={props => <ExamCellTableContainer { ...props } />} />
+            <Route path={"/dashboard/admin/list"} render={props => <AdminEmployeesTableContainer { ...props } />} />
+            <Route path={"/dashboard/tnp/list"} render={props => <TnpTableContainer { ...props } />} />
             <Route path={"/dashboard/faculty/attendance"} render={props => <FacultyAttendancePanelContainer { ...props } />} />
             <Route path={"/dashboard/department/add"} render={props => <DepartmentContainer { ...props } />} />
+            <Route path={"/dashboard/department/list"} render={props => <DepartmentTableContainer { ...props } />} />
             <Route path={"/dashboard/batch/add"} render={props => <BatchContainer { ...props } />} />
             <Route path={"/dashboard/subject/add"} render={props => <SubjectContainer { ...props} />} />
             <Route path={"/dashboard/subject/list"} render={props => <ListSubjectContainer { ...props} />} />

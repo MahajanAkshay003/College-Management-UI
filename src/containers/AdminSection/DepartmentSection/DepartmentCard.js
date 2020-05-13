@@ -45,6 +45,20 @@ const DepartmentCard = props => {
                   Add +
                 </Button>
               </Grid>
+              <Grid item xs={5}>
+                <Button
+                  variant={"contained"}
+                  style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    color: "white",
+                    borderRadius: "16px",
+                  }}
+                  onClick={() => props.history.push("/dashboard/department/list")}
+                  fullWidth
+                >
+                  List
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
           <Grid item xs={4}>

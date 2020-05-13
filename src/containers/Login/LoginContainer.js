@@ -11,6 +11,7 @@ const LoginContainer = props => {
     const loginTypes = ["student", "admin", "faculty", "exam"];
     setLoading(true);
     setTimeout(() => setLoading(false), 1000);
+    if (localStorage.getItem("token")) return props.history.push("/dashboard");
     if (!loginTypes.includes(props.match.params.loginType)) return props.history.push("/");
   }, [props.match.params.loginType]);
   return (

@@ -6,7 +6,7 @@ import {createMuiTheme, ThemeProvider} from "@material-ui/core/styles";
 import {green} from "@material-ui/core/colors";
 
 const ListSubjectTable = props => {
-  const tableHeaders = ["Code", "Name", "Semester", "Credits", "Department", "Actions"];
+  const tableHeaders = ["Code", "Name", "Semester", "Credits", "Department"];
   const { subjects } = props;
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -35,13 +35,6 @@ const ListSubjectTable = props => {
                   <TableCell>{subject.semester}</TableCell>
                   <TableCell>{subject.credits}</TableCell>
                   <TableCell>{subject.department.departmentName}</TableCell>
-                  <TableCell>
-                    <ThemeProvider theme={theme}>
-                      <Button variant="contained" color="primary" style={{ color: "white" }} onClick={() => {}}>
-                        Edit Subject
-                      </Button>
-                    </ThemeProvider>
-                  </TableCell>
                 </TableRow>
               ))
               :

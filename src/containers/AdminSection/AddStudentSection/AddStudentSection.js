@@ -8,7 +8,7 @@ import StudentAdditionalDetails from './AddStudentAdditionalDetails';
 import SearchStudentSection from "./SearchStudentSection";
 import useGetDepartments from "../../../remoteHooks/getDepartments";
 import NotificationCustomHook from "../../../CustomHooks/NotificationCustomHook";
-import {addCollegeUser} from "../../../remoteMethods/CollegeUser/CollegeUser";
+import {addCollegeUser, editUser} from "../../../remoteMethods/CollegeUser/CollegeUser";
 import Notification from "../../../components/Notification/Notification";
 import { getStudentByRollNumber } from "../../../remoteMethods/Student/student";
 import useGetBatchesByDepartment from "../../../remoteHooks/getBatchesByDepartment";
@@ -72,12 +72,21 @@ const AddStudentSection = props => {
         quota, ipuRank, semester
       }
     }
-    addCollegeUser(userData)
-      .then(() => {
-        setNotificationTypeAndMessage("success", "New Student Added Successfully!");
-      }).catch(() => {
+    if (props.match.params.action !== "edit") {
+      addCollegeUser(userData)
+        .then(() => {
+          setNotificationTypeAndMessage("success", "New Student Added Successfully!");
+        }).catch(() => {
         setNotificationTypeAndMessage("error", "Something went wrong!");
       })
+    } else {
+      editUser("student", { ...userData.userInfo, id: foundStudent.id })
+        .then(() => {
+          setNotificationTypeAndMessage("success", "Student updated Successfully!");
+        }).catch(() => {
+        setNotificationTypeAndMessage("error", "Something went wrong!");
+      })
+    }
   }
   const getStudentDetails = () => {
     getStudentByRollNumber(rollNumber)

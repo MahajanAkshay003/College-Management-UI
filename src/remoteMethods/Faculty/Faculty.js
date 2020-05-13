@@ -1,14 +1,15 @@
 import axios from 'axios';
 import {apiUrl} from "../../vars/config";
 
-export const getFaculties = fullName => {
+export const getFaculties = (fullName, departmentId) => {
+  let whereFilter;
+  if (departmentId) whereFilter = { fullName: { like: fullName }, departmentId }
+  else whereFilter = { fullName: { like: fullName } }
   return new Promise((resolve, reject) => {
     axios({
       method: "GET",
       url: `${apiUrl}/Faculties/getFaculties`,
-      params: {
-        whereFilter: { fullName: { like: fullName } }
-      }
+      params: { whereFilter }
     }).then(({ data }) => {
       resolve(data.faculties);
     }).catch(error => {

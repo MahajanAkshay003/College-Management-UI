@@ -29,6 +29,20 @@ export const loginUser = (email, password, userType) => {
   })
 }
 
+export const editUser = (userType, userData) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "POST",
+      url: `${apiUrl}/CollegeUsers/editUser`,
+      data: { userType, userData }
+    }).then(({ data }) => {
+      resolve(data);
+    }).catch(error => {
+      reject(error);
+    })
+  })
+}
+
 export const getUserByToken = token => {
   return new Promise((resolve, reject) => {
     axios({
@@ -41,4 +55,18 @@ export const getUserByToken = token => {
       reject(error);
     })
   })
+}
+
+export const getEmployeesByUserType = (userType, fullName) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "POST",
+      url: `${apiUrl}/CollegeUsers/getEmployeesByType`,
+      data: { userType, whereFilter: { fullName: { like: fullName } } }
+    }).then(({ data }) => {
+      resolve(data.employees);
+    }).catch(error => {
+      reject(error);
+    })
+  });
 }

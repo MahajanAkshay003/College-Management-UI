@@ -28,7 +28,7 @@ const CreateExamCellCard = props => {
               fontWeight: 300,
               color: "white"
             }}>
-              Add ExamCell User
+              Add Exam Cell User
             </Typography>
             <Grid container spacing={1}>
               <Grid item xs={5}>
@@ -43,6 +43,20 @@ const CreateExamCellCard = props => {
                   onClick={() => props.history.push("/dashboard/examcell/add")}
                 >
                   Add +
+                </Button>
+              </Grid>
+              <Grid item xs={5}>
+                <Button
+                  variant={"contained"}
+                  style={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    color: "white",
+                    borderRadius: "16px",
+                  }}
+                  fullWidth
+                  onClick={() => props.history.push("/dashboard/examcell/list")}
+                >
+                  List
                 </Button>
               </Grid>
             </Grid>

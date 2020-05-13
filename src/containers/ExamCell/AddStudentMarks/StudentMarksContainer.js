@@ -38,6 +38,7 @@ const StudentMarksContainer = props => {
           student={student}
           saveMarks={saveMarks}
           setStudent={setStudent}
+          view={props.view}
         />
       </Grid>
     </Grid>

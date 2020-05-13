@@ -31,21 +31,35 @@ const CreateFacultyCard = props => {
                 Add Faculty
               </Typography>
               <Grid container spacing={1}>
-              <Grid item xs={5}>
-                <Button
-                  variant={"contained"}
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
-                    color: "white",
-                    borderRadius: "16px",
-                  }}
-                  onClick={() => props.history.push("/dashboard/faculty/add")}
-                  fullWidth
-                >
-                  Add +
-                </Button>
+                <Grid item xs={5}>
+                  <Button
+                    variant={"contained"}
+                    style={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                      color: "white",
+                      borderRadius: "16px",
+                    }}
+                    onClick={() => props.history.push("/dashboard/faculty/add")}
+                    fullWidth
+                  >
+                    Add +
+                  </Button>
+                </Grid>
+                <Grid item xs={5}>
+                  <Button
+                    variant={"contained"}
+                    style={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                      color: "white",
+                      borderRadius: "16px",
+                    }}
+                    onClick={() => props.history.push("/dashboard/faculty/list")}
+                    fullWidth
+                  >
+                    List
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
             </Grid>
             <Grid item xs={4}>
               <CardMedia style={{

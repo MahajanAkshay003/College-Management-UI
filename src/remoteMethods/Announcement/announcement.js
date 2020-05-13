@@ -10,7 +10,9 @@ export const sendAnnouncement = (subject, description, studentId, senderId, send
         subject, description, studentId, senderId, senderType
       }
     }).then(({ data }) => {
-
+      resolve(data.announcement);
+    }).catch(error => {
+      reject(error);
     })
   })
 }
@@ -77,6 +79,34 @@ export const getQueries = (userType, id) => {
       data: { [idFieldName]: id }
     }).then(({ data }) => {
       resolve(data.queries);
+    }).catch(error => {
+      reject(error);
+    })
+  })
+}
+
+export const saveQueryAnswer = (studentQueryId, answer) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "POST",
+      url: `${apiUrl}/StudentQueryAnswers/answerQuery`,
+      data: { studentQueryId, answer }
+    }).then(({ data }) => {
+      resolve(data.queryAnswer);
+    }).catch(error => {
+      reject(error);
+    })
+  })
+}
+
+export const sendMailToStudent = (studentId, subject, description) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "POST",
+      url: `${apiUrl}/Announcements/sendMail`,
+      data: { studentId, subject, description }
+    }).then(({ data }) => {
+      resolve(data.success);
     }).catch(error => {
       reject(error);
     })

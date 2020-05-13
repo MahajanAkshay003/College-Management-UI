@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, TextField, Button } from "@material-ui/core";
+import { connect } from "react-redux";
+import {sendAnnouncement} from "../../../../../remoteMethods/Announcement/announcement";
 
 const AnnouncementDialog = props => {
-  const { isOpenAnnouncementDialog, setOpenAnnouncementDialog } = props;
+  const { isOpenAnnouncementDialog, setOpenAnnouncementDialog, selectedStudents, user } = props;
   const [ announcementHeading, setAnnouncementHeading ] = useState("");
   const [ announcementDescription, setAnnouncementDescription ] = useState("");
   const handleClose = () => {
     setOpenAnnouncementDialog(false);
     setAnnouncementHeading("");
     setAnnouncementDescription("");
+  }
+  const sendAnnouncementButtonHandler = () => {
+    Promise.all(selectedStudents.map(studentId => sendAnnouncement(
+      announcementHeading, announcementDescription, studentId,
+      user.userId, user.userType
+    ))).then(() => {
+      handleClose();
+    }).catch(error => {
+      console.log(error);
+      handleClose();
+    })
   }
   return (
     <Dialog open={isOpenAnnouncementDialog} onClose={handleClose}>
@@ -37,7 +50,7 @@ const AnnouncementDialog = props => {
         <Button onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={sendAnnouncementButtonHandler} color="primary">
           Send
         </Button>
       </DialogActions>
@@ -45,4 +58,8 @@ const AnnouncementDialog = props => {
   );
 }
 
-export default AnnouncementDialog;
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default connect(mapStateToProps)(AnnouncementDialog);

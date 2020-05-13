@@ -36,6 +36,7 @@ const StudentSemesterTabSection = props => {
             saveMarks={saveMarks}
             setStudent={setStudent}
             student={student}
+            view={props.view}
           />
         </Grid>
       }

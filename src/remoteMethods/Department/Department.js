@@ -27,3 +27,17 @@ export const getAllDepartments = () => {
     })
   });
 }
+
+export const addHodToDepartment = (departmentId, facultyId) => {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: "POST",
+      url: `${apiUrl}/Departments/addHod`,
+      data: { departmentId, facultyId }
+    }).then(({ data }) => {
+      resolve(data);
+    }).catch(error => {
+      reject(error);
+    })
+  })
+}

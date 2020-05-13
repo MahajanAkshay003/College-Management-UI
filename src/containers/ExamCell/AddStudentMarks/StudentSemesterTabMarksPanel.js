@@ -48,13 +48,13 @@ const StudentSemesterTabMarksPanel = props => {
             </Grid>
             <Grid item xs={9}>
               <Grid container>
-                <Grid item xs={12} style={{ textAlign: "right" }}>
+                {!props.view && <Grid item xs={12} style={{ textAlign: "right" }}>
                   <ThemeProvider theme={theme}>
                     <Button style={{ color: "white" }} size={"small"} onClick={() => addOrEditMarksOpenHandler(true)} color="primary" variant={"contained"}>
                       { currentSubjectMarks ? "Edit Marks" : "Add Marks" }
                     </Button>
                   </ThemeProvider>
-                </Grid>
+                </Grid>}
                 <Grid item xs={12}>
                   {currentSubjectMarks &&
                   <List>

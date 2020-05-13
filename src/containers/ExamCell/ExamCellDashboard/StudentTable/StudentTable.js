@@ -1,12 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import {Table, TableHead, TableRow, TableCell, TableBody, Checkbox, Paper, Button} from "@material-ui/core";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 
 const StudentsTable = props => {
-  const tableHeaders = ["Name", "Roll Number", "Current Semester", "Department", "Batch", "Actions"];
+  const [ tableHeaders, setTableHeaders ] = useState(["Name", "Roll Number", "Current Semester", "Department", "Batch"]);
   const { students, selectedStudents, setSelectedStudents } = props;
+  useEffect(() => {
+    if (props.user.userType === "examcell") setTableHeaders([...tableHeaders, "Action"]);
+  }, []);
   const addEditMarksHandler = studentId => {
     props.history.push(`/dashboard/editMarks/${studentId}`);
   }
@@ -58,13 +62,13 @@ const StudentsTable = props => {
               <TableCell>{student.semester}</TableCell>
               <TableCell>{student.department.departmentName}</TableCell>
               <TableCell>{student.batch.batchName}</TableCell>
-              <TableCell>
+              {props.user.userType === "examcell" && <TableCell>
                 <ThemeProvider theme={theme}>
                   <Button variant="contained" color="primary" style={{ color: "white" }} onClick={() => addEditMarksHandler(student.id)}>
                     Add / Edit Marks
                   </Button>
                 </ThemeProvider>
-              </TableCell>
+              </TableCell>}
             </TableRow>
           ))}
         </TableBody>
@@ -77,4 +81,8 @@ const theme = createMuiTheme({
   palette: { primary: green }
 });
 
-export default    withRouter(StudentsTable);
+const mapStateToProps = state => ({
+  user: state.user
+})
+
+export default withRouter(connect(mapStateToProps)(StudentsTable));
