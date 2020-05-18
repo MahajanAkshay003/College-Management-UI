@@ -34,7 +34,7 @@ const Announcements = props => {
               centered
             >
               <Tab label="Announcements" />
-              { props.user.userType === "student" || props.user.userType === "faculty" && <Tab label="Queries" />}
+              { (props.user.userType === "student" || props.user.userType === "faculty") && <Tab label="Queries" />}
             </Tabs>
             {showPanelByTabValue()}
           </Paper>

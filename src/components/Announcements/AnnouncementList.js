@@ -9,6 +9,15 @@ import AddIcon from "@material-ui/icons/Add";
 const AnnouncementList = props => {
   const { userId, userType } = props.user;
   const announcements = useGetAnnouncementsHook(userId, userType);
+  const getFullNameBySenderType = (senderType, announcement) => {
+    switch (senderType) {
+      case "faculty": return announcement.announcement.faculty.fullName;
+      case "admin": return announcement.announcement.admin.fullName;
+      case "examcell": return announcement.announcement.examcell.fullName;
+      case "tnp": return announcement.announcement.tnp.fullName;
+      default:
+    }
+  }
   return (
     <Fragment>
       <Table>
@@ -28,7 +37,7 @@ const AnnouncementList = props => {
                 <TableRow>
                   <TableCell>{announcement.announcement.subject}</TableCell>
                   <TableCell>{announcement.announcement.description}</TableCell>
-                  <TableCell>{announcement.announcement.faculty.fullName}</TableCell>
+                  <TableCell>{getFullNameBySenderType(announcement.announcement.senderType, announcement)}</TableCell>
                   <TableCell>
                     <Chip label={announcement.announcement.senderType} color={"secondary"} />
                   </TableCell>
@@ -52,10 +61,10 @@ const AnnouncementList = props => {
         </TableBody>
       </Table>
       <div style={{ position: "fixed", bottom: 24, right: 24 }}>
-        <Fab style={{ backgroundColor: green[500], color: "white" }} aria-label="add" variant="extended" onClick={() => props.history.push("/dashboard/sendAnnouncement")}>
+        {props.user.userType !== "student" && <Fab style={{ backgroundColor: green[500], color: "white" }} aria-label="add" variant="extended" onClick={() => props.history.push("/dashboard/sendAnnouncement")}>
           <AddIcon />
           Announcement
-        </Fab>
+        </Fab>}
       </div>
     </Fragment>
   );

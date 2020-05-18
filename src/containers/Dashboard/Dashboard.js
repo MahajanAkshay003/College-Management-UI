@@ -30,7 +30,7 @@ import DepartmentTableContainer
   from "../AdminSection/DepartmentSection/DepartmentTableContainer/DepartmentTableContainer";
 
 const Dashboard = props => {
-  const { userType } = props.user;
+  const { userType, userId } = props.user;
   return (
     // <BrowserRouter>
     <Fragment>
@@ -53,7 +53,10 @@ const Dashboard = props => {
             }} exact/>
             <Route path={"/dashboard/announcements"} render={props => <Announcements />}/>
             <Route path={"/dashboard/sendAnnouncement"} render={props => <ExamCellDashboard { ...props } />} />
-            <Route path={"/dashboard/profile"} render={props => <StudentProfile />}/>
+            <Route path={"/dashboard/profile"} render={props => {
+              if (userType === "student") return props.history.push(`/dashboard/view/${userId}`);
+              else return props.history.push("/dashboard");
+            }}/>
             <Route path={"/dashboard/student/:action"} render={props => <AddStudentSection { ...props } />} />
             <Route path={"/dashboard/admin/add"} render={props => <AddAdminSection { ...props } />} />
             <Route path={"/dashboard/examcell/add"} render={props => <AddExamCellSection { ...props } />} />

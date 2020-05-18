@@ -12,7 +12,8 @@ const AccountMenu = props => {
     const userType = props.user.userType;
     props.logoutUser();
     localStorage.clear();
-    props.history.push(`/login/${userType}`);
+    props.history.push(`/`);
+    window.location.reload();
   }
   return (
     <Menu
