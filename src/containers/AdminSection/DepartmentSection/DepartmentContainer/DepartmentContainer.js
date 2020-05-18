@@ -57,14 +57,14 @@ const DepartmentContainer = props => {
               onChange={event => setDepartmentDescription(event.target.value)}
               fullWidth
             />
-            <TextField
-              style={{ marginTop: "12px" }}
-              label="Department HOD"
-              variant="outlined"
-              value={departmentHodName}
-              onChange={event => setDepartmentHodName(event.target.value)}
-              fullWidth
-            />
+            {/*<TextField*/}
+            {/*  style={{ marginTop: "12px" }}*/}
+            {/*  label="Department HOD"*/}
+            {/*  variant="outlined"*/}
+            {/*  value={departmentHodName}*/}
+            {/*  onChange={event => setDepartmentHodName(event.target.value)}*/}
+            {/*  fullWidth*/}
+            {/*/>*/}
             <Grid container justify={"flex-end"}>
               <Grid item xs={3}>
                 <Button

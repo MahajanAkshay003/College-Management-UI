@@ -11,7 +11,7 @@ const LoginTypeSwitcher = props => {
     { route: 'student', name: 'Student Login', icon: <FontAwesomeIcon icon={faUserGraduate} /> },
     { route: 'admin', name: 'AdminSection Login', icon: <FontAwesomeIcon icon={faUserShield} /> },
     { route: 'faculty', name: 'Faculty Login', icon: <FontAwesomeIcon icon={faChalkboardTeacher} /> },
-    { route: 'exam', name: 'Exam Cell Login', icon: <FontAwesomeIcon icon={faBook} /> }
+    { route: 'examcell', name: 'Exam Cell Login', icon: <FontAwesomeIcon icon={faBook} /> }
   ];
   return (
     <SpeedDial

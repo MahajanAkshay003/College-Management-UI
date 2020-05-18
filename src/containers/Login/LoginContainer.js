@@ -8,7 +8,7 @@ import NotificationCustomHook from "../../CustomHooks/NotificationCustomHook";
 const LoginContainer = props => {
   const [ isLoading, setLoading ] = useState(false);
   useEffect(() => {
-    const loginTypes = ["student", "admin", "faculty", "exam"];
+    const loginTypes = ["student", "admin", "faculty", "examcell"];
     setLoading(true);
     setTimeout(() => setLoading(false), 1000);
     if (localStorage.getItem("token")) return props.history.push("/dashboard");
