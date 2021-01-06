@@ -11,7 +11,7 @@
     "@material-ui/icons": "^4.5.1",
     "@material-ui/lab": "^4.0.0-alpha.51",
     "@material-ui/pickers": "^3.2.10",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chroma-js": "^2.1.0",
     "date-fns": "^2.12.0",
     "immutable": "^4.0.0-rc.12",
